@@ -569,6 +569,7 @@
     }
 
     // ── Boot ──────────────────────────────────────────────────────
+    // eslint-disable-next-line -- Refactoring this to avoid global state mutation would require significant architectural changes and passing state explicitly.
     function boot() {
       applyTemporalTheme();
       setInterval(applyTemporalTheme, 60000); // Check theme every minute
