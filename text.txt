@@ -304,6 +304,29 @@
   </footer>
 
   <script>
+
+    function sanitizeURL(url) {
+      if (!url) return '#';
+      try {
+        const parsed = new URL(url, window.location.origin);
+        if (parsed.protocol === 'http:' || parsed.protocol === 'https:') {
+          return parsed.href;
+        }
+      } catch (e) {}
+      return '#';
+    }
+
+    function escapeHTML(str) {
+      if (!str) return '';
+      return String(str).replace(/[&<>'"]/g, tag => ({
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          "'": '&#39;',
+          '"': '&quot;'
+      }[tag] || tag));
+    }
+
     const STORAGE_KEY = 'levi-dashboard-v3';
     
     const defaultConfig = {
@@ -558,10 +581,10 @@
         const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=https://www.theverge.com/rss/index.xml`);
         const data = await res.json();
         
-        ticker.innerHTML = data.items.map(item => `<span class="ticker-item">${item.title}</span>`).join('');
+        ticker.innerHTML = data.items.map(item => `<span class="ticker-item">${escapeHTML(item.title)}</span>`).join('');
         list.innerHTML = data.items.map(item => `
           <div class="rss-article">
-            <a href="${item.link}" target="_blank">${item.title}</a>
+            <a href="${sanitizeURL(item.link)}" target="_blank">${escapeHTML(item.title)}</a>
             <div class="rss-date">${new Date(item.pubDate).toLocaleDateString()}</div>
           </div>
         `).join('');
