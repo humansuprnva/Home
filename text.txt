@@ -559,7 +559,7 @@
         let useCache = false;
         const cacheKey = 'rssCache_theverge';
         const cacheTimeKey = 'rssCacheTime_theverge';
-        const cacheDuration = 3600000; // 1 hour
+        const cacheDuration = 3600000;
         try {
           const cachedData = localStorage.getItem(cacheKey);
           const cacheTime = localStorage.getItem(cacheTimeKey);
