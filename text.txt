@@ -324,7 +324,7 @@
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
         return raw ? { ...structuredClone(defaultConfig), ...JSON.parse(raw) } : structuredClone(defaultConfig);
-      } catch { return structuredClone(defaultConfig); }
+      } catch (e) { console.error(e); return structuredClone(defaultConfig); }
     }
     const state = loadState();
     function saveState() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
@@ -506,7 +506,7 @@
             forecastHTML += '</div>';
 
             detailView.innerHTML = `<div class="weather-stats"><span>Wind: ${data.current.wind_speed_10m} mph</span><span>Humidity: ${data.current.relative_humidity_2m}%</span></div>${forecastHTML}`;
-          } catch (e) { condEl.textContent = 'Forecast offline'; }
+          } catch (e) { console.error(e); condEl.textContent = 'Forecast offline'; }
         });
       }
       body.append(hero, detailView);
@@ -565,7 +565,7 @@
             <div class="rss-date">${new Date(item.pubDate).toLocaleDateString()}</div>
           </div>
         `).join('');
-      } catch (e) { ticker.innerHTML = '<span class="ticker-item">Feed unavailable</span>'; }
+      } catch (e) { console.error(e); ticker.innerHTML = '<span class="ticker-item">Feed unavailable</span>'; }
     }
 
     // ── Boot ──────────────────────────────────────────────────────
