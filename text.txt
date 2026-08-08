@@ -380,8 +380,8 @@
       }
     };
 
+    const focusLine = document.getElementById('focusLine');
     function refreshFocus() {
-      const focusLine = document.getElementById('focusLine');
       const lines = (state.notes || '').split('\n');
       const focusMatch = lines.find(l => l.toLowerCase().startsWith('focus:')) || lines.find(l => l.trim().length > 0);
       focusLine.textContent = focusMatch ? focusMatch.replace(/^focus:\s*/i, '').trim() : "Choose one direction.";
