@@ -330,6 +330,14 @@
     function saveState() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
 
     // ── Utilities ─────────────────────────────────────────────────
+    function debounce(func, wait) {
+      let timeout;
+      return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func(...args), wait);
+      };
+    }
+
     function el(tag, cls, text) {
       const e = document.createElement(tag);
       if (cls) e.className = cls;
@@ -426,7 +434,7 @@
       body.append(textarea, agendaContainer, saveBar);
 
       card.onclick = (e) => { if (e.target.tagName !== 'TEXTAREA') toggleFocus(card); };
-      textarea.oninput = () => { state.notes = textarea.value; saveState(); refreshFocus(); };
+      textarea.oninput = debounce(() => { state.notes = textarea.value; saveState(); refreshFocus(); }, 300);
 
       return card;
     }
