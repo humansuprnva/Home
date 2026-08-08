@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const html = fs.readFileSync(path.resolve(__dirname, './text.txt'), 'utf8');
+const html = fs.readFileSync(path.resolve(__dirname, '../text.txt'), 'utf8');
 const scriptContent = html.match(/<script>([\s\S]*?)<\/script>/)[1];
 
 const elMatch = scriptContent.match(/function el\([\s\S]*?\n    \}/)[0];
