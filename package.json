@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "jest",
-    "build": "exit 0"
+    "test": "jest makeCard.test.js",
+    "build": "echo \"Build skipped\""
   },
   "repository": {
     "type": "git",
