@@ -355,11 +355,13 @@
 
     // ── Focus & State Engine ──────────────────────────────────────
     let focusedWidget = null;
+    let cachedWidgetCards = null;
 
     function toggleFocus(card) {
       if (focusedWidget === card) return; // Already focused
       
-      document.querySelectorAll('.widget-card').forEach(c => {
+      cachedWidgetCards = cachedWidgetCards || document.querySelectorAll('.widget-card');
+      cachedWidgetCards.forEach(c => {
         const isMajor = c.dataset.major === 'true';
         c.classList.remove('is-focused');
         c.classList.add(isMajor ? 'is-restored' : 'is-minimized');
@@ -373,7 +375,8 @@
     document.body.onclick = (e) => {
       // Click background to reset all cards
       if (e.target === document.body || e.target.classList.contains('scroll-stack') || e.target.classList.contains('grain')) {
-        document.querySelectorAll('.widget-card').forEach(c => {
+        cachedWidgetCards = cachedWidgetCards || document.querySelectorAll('.widget-card');
+        cachedWidgetCards.forEach(c => {
           c.classList.remove('is-focused', 'is-minimized', 'is-restored');
         });
         focusedWidget = null;
