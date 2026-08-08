@@ -54,9 +54,6 @@ describe('toggleFocus', () => {
 
     expect(otherCard.classList.contains('is-focused')).toBe(false);
     expect(otherCard.classList.contains('is-minimized')).toBe(true);
-
-    // Check internal focusedWidget variable using a getter if possible,
-    // or by inferring from behavior.
   });
 
   it('should restore major cards and minimize minor cards when another card is focused', () => {
