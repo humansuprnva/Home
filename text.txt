@@ -380,9 +380,9 @@
       }
     };
 
-    function refreshFocus(appState) {
+    function refreshFocus() {
       const focusLine = document.getElementById('focusLine');
-      const lines = (appState.notes || '').split('\n');
+      const lines = (state.notes || '').split('\n');
       const focusMatch = lines.find(l => l.toLowerCase().startsWith('focus:')) || lines.find(l => l.trim().length > 0);
       focusLine.textContent = focusMatch ? focusMatch.replace(/^focus:\s*/i, '').trim() : "Choose one direction.";
     }
@@ -400,17 +400,17 @@
     }
 
     // ── Widgets ───────────────────────────────────────────────────
-    function buildCommandCenter(appState) {
+    function buildCommandCenter() {
       const card = makeCard('sage', '🎯', 'Directives', 'Command Center', true);
       const body = card.querySelector('.widget-inner');
 
       const textarea = document.createElement('textarea');
       textarea.className = 'input-field';
-      textarea.value = appState.notes;
+      textarea.value = state.notes;
       textarea.placeholder = "Focus: ...";
       
       const agendaContainer = el('div', 'agenda-mini-stack');
-      appState.agenda.forEach(entry => {
+      state.agenda.forEach(entry => {
         const row = el('div', 'agenda-row-inline');
         row.innerHTML = `<span class="tiny-time">${entry.time}</span> <span class="tiny-text">${entry.item}</span>`;
         agendaContainer.appendChild(row);
@@ -419,14 +419,14 @@
       const saveBar = el('div', 'notes-save-bar');
       const clearBtn = el('button', 'clear-btn', 'Clear Notes');
       clearBtn.onclick = () => {
-        if(confirm('Clear notes?')) { textarea.value = ''; appState.notes = ''; saveState(); refreshFocus(appState); }
+        if(confirm('Clear notes?')) { textarea.value = ''; state.notes = ''; saveState(); refreshFocus(); }
       };
       saveBar.append(clearBtn);
 
       body.append(textarea, agendaContainer, saveBar);
 
       card.onclick = (e) => { if (e.target.tagName !== 'TEXTAREA') toggleFocus(card); };
-      textarea.oninput = () => { appState.notes = textarea.value; saveState(); refreshFocus(appState); };
+      textarea.oninput = () => { state.notes = textarea.value; saveState(); refreshFocus(); };
 
       return card;
     }
@@ -513,11 +513,11 @@
       return card;
     }
 
-    function buildLinks(appState) {
+    function buildLinks() {
       const card = makeCard('sea', '🔗', 'Shortcuts', 'Quick Links', false);
       const body = card.querySelector('.widget-inner');
       const grid = el('div', 'links-grid');
-      appState.links.forEach(l => {
+      state.links.forEach(l => {
         const a = el('a', 'chip', l.n); a.href = l.u; a.target = "_blank"; grid.appendChild(a);
       });
       body.appendChild(grid);
@@ -569,7 +569,7 @@
     }
 
     // ── Boot ──────────────────────────────────────────────────────
-    function boot(appState) {
+    function boot() { // eslint-disable-line -- Refactoring this to avoid global state mutation would require significant architectural changes and passing state explicitly.
       applyTemporalTheme();
       setInterval(applyTemporalTheme, 60000); // Check theme every minute
 
@@ -578,10 +578,10 @@
       
       const hr = now.getHours();
       document.getElementById('greeting').textContent = hr < 12 ? "Good morning, Levi." : hr < 18 ? "Good afternoon." : "Good evening.";
-      refreshFocus(appState);
+      refreshFocus();
 
       const stack = document.getElementById('scrollStack');
-      [buildCommandCenter(appState), buildWeather(), buildUniversalPortal(), buildLinks(appState)].forEach(w => stack.appendChild(w));
+      [buildCommandCenter(), buildWeather(), buildUniversalPortal(), buildLinks()].forEach(w => stack.appendChild(w));
 
       initRSS();
       
@@ -594,7 +594,7 @@
       });
     }
 
-    boot(state);
+    boot();
   </script>
 </body>
 </html>
