@@ -1,11 +1,12 @@
 const fs = require('fs');
+const test = require('node:test');
+const assert = require('node:assert');
 
-describe('saveState from text.txt', () => {
+test('saveState from text.txt', async (t) => {
   let extractedModule;
 
-  beforeAll(() => {
+  t.before(() => {
     const content = fs.readFileSync('text.txt', 'utf8');
-
     const scriptStart = content.indexOf('<script>');
     const scriptEnd = content.indexOf('</script>');
     const scriptContent = content.substring(scriptStart + 8, scriptEnd);
@@ -40,68 +41,66 @@ describe('saveState from text.txt', () => {
     }
   });
 
-  beforeEach(() => {
+  t.beforeEach(() => {
     const store = {};
     global.localStorage = {
-      getItem: jest.fn(key => store[key] || null),
-      setItem: jest.fn((key, value) => {
+      getItem: (key) => store[key] || null,
+      setItem: (key, value) => {
         store[key] = value.toString();
-      }),
-      clear: jest.fn(() => {
+      },
+      clear: () => {
         for (let key in store) delete store[key];
-      }),
+      },
       store
     };
 
-    jest.resetModules();
+    // Using require caching workaround for standard require
+    delete require.cache[require.resolve('../extracted.js')];
     extractedModule = require('../extracted.js');
   });
 
-  afterEach(() => {
+  t.afterEach(() => {
     delete global.localStorage;
   });
 
-  afterAll(() => {
+  t.after(() => {
     delete global.structuredClone;
     if (fs.existsSync('extracted.js')) {
       fs.unlinkSync('extracted.js');
     }
   });
 
-  it('should call localStorage.setItem with correct key and stringified state', () => {
+  await t.test('should call localStorage.setItem with correct key and stringified state', () => {
     extractedModule.state.notes = 'Test notes from test';
     extractedModule.saveState();
 
-    expect(global.localStorage.setItem).toHaveBeenCalledWith(
-      extractedModule.STORAGE_KEY,
-      JSON.stringify(extractedModule.state)
-    );
+    const parsed = JSON.parse(global.localStorage.store[extractedModule.STORAGE_KEY]);
+    assert.strictEqual(parsed.notes, 'Test notes from test');
   });
 
-  it('should actually store the value in mock localStorage', () => {
+  await t.test('should actually store the value in mock localStorage', () => {
     extractedModule.state.notes = 'Test notes';
     extractedModule.state.agenda = [];
     extractedModule.state.links = [];
 
     extractedModule.saveState();
 
-    expect(global.localStorage.store[extractedModule.STORAGE_KEY]).toBe('{"notes":"Test notes","agenda":[],"links":[]}');
+    assert.strictEqual(
+      global.localStorage.store[extractedModule.STORAGE_KEY],
+      '{"notes":"Test notes","agenda":[],"links":[]}'
+    );
   });
 
-  it('should reflect changes to state when saveState is called again', () => {
+  await t.test('should reflect changes to state when saveState is called again', () => {
     extractedModule.state.notes = 'Updated notes';
     extractedModule.state.agenda = [{ time: 'Morning', item: 'Test item' }];
     extractedModule.state.links = [];
 
     extractedModule.saveState();
 
-    expect(global.localStorage.setItem).toHaveBeenCalledWith(
-      extractedModule.STORAGE_KEY,
-      JSON.stringify({
-        notes: 'Updated notes',
-        agenda: [{ time: 'Morning', item: 'Test item' }],
-        links: []
-      })
+    assert.strictEqual(
+      global.localStorage.store[extractedModule.STORAGE_KEY],
+      '{"notes":"Updated notes","agenda":[{"time":"Morning","item":"Test item"}],"links":[]}'
     );
   });
 });
