@@ -4,7 +4,40 @@ describe('saveState from text.txt', () => {
   let extractedModule;
 
   beforeAll(() => {
-    require('../test_extract.js');
+    const content = fs.readFileSync('text.txt', 'utf8');
+
+    const scriptStart = content.indexOf('<script>');
+    const scriptEnd = content.indexOf('</script>');
+    const scriptContent = content.substring(scriptStart + 8, scriptEnd);
+
+    const regex = /const STORAGE_KEY[\s\S]*?function saveState\(\) \{ localStorage\.setItem\(STORAGE_KEY, JSON\.stringify\(state\)\); \}/;
+    const match = scriptContent.match(regex);
+
+    if (match) {
+      let moduleContent = match[0];
+
+      // Make state mutable
+      moduleContent = moduleContent.replace(/const state = loadState\(\);/, 'var state = loadState();');
+      moduleContent = moduleContent.replace(/const STORAGE_KEY = 'levi-dashboard-v3';/, 'var STORAGE_KEY = "levi-dashboard-v3";');
+      moduleContent = moduleContent.replace(/const defaultConfig =/, 'var defaultConfig =');
+
+      let prefix = `
+      global.structuredClone = (val) => JSON.parse(JSON.stringify(val));
+      `;
+
+      let suffix = `
+      module.exports = {
+        saveState,
+        loadState,
+        get state() { return state; },
+        set state(newS) { state = newS; },
+        get STORAGE_KEY() { return STORAGE_KEY; },
+        set STORAGE_KEY(newK) { STORAGE_KEY = newK; }
+      };
+      `;
+
+      fs.writeFileSync('extracted.js', prefix + moduleContent + suffix);
+    }
   });
 
   beforeEach(() => {
