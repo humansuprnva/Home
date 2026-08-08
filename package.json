@@ -1,23 +1,15 @@
 {
   "name": "app",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Tests for toggleFocus",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "echo 'No build script'"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/humansuprnva/Home.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/humansuprnva/Home/issues"
-  },
-  "homepage": "https://github.com/humansuprnva/Home#readme",
   "devDependencies": {
     "jest": "^30.4.2",
     "jest-environment-jsdom": "^30.4.1",
