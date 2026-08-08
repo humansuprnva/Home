@@ -1,0 +1,18 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "Tests for toggleFocus",
+  "scripts": {
+    "test": "jest",
+    "build": "echo 'No build script'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/humansuprnva/Home.git"
+  },
+  "devDependencies": {
+    "jest": "^30.4.2",
+    "jest-environment-jsdom": "^30.4.1",
+    "jsdom": "^22.1.0"
+  }
+}
