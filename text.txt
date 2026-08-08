@@ -412,7 +412,19 @@
       const agendaContainer = el('div', 'agenda-mini-stack');
       state.agenda.forEach(entry => {
         const row = el('div', 'agenda-row-inline');
-        row.innerHTML = `<span class="tiny-time">${entry.time}</span> <span class="tiny-text">${entry.item}</span>`;
+
+        const timeSpan = document.createElement('span');
+        timeSpan.className = 'tiny-time';
+        timeSpan.textContent = entry.time;
+
+        const textSpan = document.createElement('span');
+        textSpan.className = 'tiny-text';
+        textSpan.textContent = entry.item;
+
+        row.appendChild(timeSpan);
+        row.appendChild(document.createTextNode(' '));
+        row.appendChild(textSpan);
+
         agendaContainer.appendChild(row);
       });
 
