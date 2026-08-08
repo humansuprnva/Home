@@ -499,11 +499,7 @@
             tempEl.textContent = `${Math.round(data.current.temperature_2m)}°`;
             condEl.textContent = "Current Conditions";
             
-            let forecastHTML = '<div class="forecast-grid">';
-            for(let i=1; i<4; i++) {
-              forecastHTML += `<div class="forecast-day"><p class="eyebrow">${new Date(data.daily.time[i]).toLocaleDateString([], {weekday:'short'})}</p><p><strong>${Math.round(data.daily.temperature_2m_max[i])}°</strong></p></div>`;
-            }
-            forecastHTML += '</div>';
+            const forecastHTML = `<div class="forecast-grid">${[1, 2, 3].map(i => `<div class="forecast-day"><p class="eyebrow">${new Date(data.daily.time[i]).toLocaleDateString([], {weekday:'short'})}</p><p><strong>${Math.round(data.daily.temperature_2m_max[i])}°</strong></p></div>`).join('')}</div>`;
 
             detailView.innerHTML = `<div class="weather-stats"><span>Wind: ${data.current.wind_speed_10m} mph</span><span>Humidity: ${data.current.relative_humidity_2m}%</span></div>${forecastHTML}`;
           } catch (e) { condEl.textContent = 'Forecast offline'; }
