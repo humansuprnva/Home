@@ -19,7 +19,7 @@
       --shadow-md: 0 12px 36px rgba(0,0,0,0.10);
       --safe-bottom: env(safe-area-inset-bottom, 0px);
       --safe-top: env(safe-area-inset-top, 0px);
-      
+
       /* Base Theme (Morning) */
       --sand: #e8eff5;
       --paper: #f4f8fb;
@@ -35,7 +35,7 @@
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; }
     html { font-size: 16px; scroll-behavior: smooth; }
-    
+
     body {
       font-family: 'DM Sans', sans-serif;
       font-weight: 300;
@@ -49,7 +49,7 @@
     /* Temporal Themes */
     body.theme-morning {
       --sand: #e8eff5; --paper: #f4f8fb; --terracotta: #6a8caf; --ink: #2c3e50;
-      background-image: radial-gradient(circle at 20% 30%, rgba(253,235,208,0.4) 0%, transparent 40%), 
+      background-image: radial-gradient(circle at 20% 30%, rgba(253,235,208,0.4) 0%, transparent 40%),
                         radial-gradient(circle at 80% 20%, rgba(213,232,247,0.4) 0%, transparent 50%);
     }
     body.theme-afternoon {
@@ -125,8 +125,8 @@
       text-transform: uppercase; color: var(--ink);
     }
     .zen-toggle:hover { opacity: 1; }
-    
-    body.zen-active .site-title, 
+
+    body.zen-active .site-title,
     body.zen-active .greeting,
     body.zen-active .eyebrow:not(.zen-keep) {
       opacity: 0.1; filter: blur(4px); transition: all 0.8s ease;
@@ -160,11 +160,11 @@
       transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
       max-height: 800px; opacity: 1; cursor: pointer;
     }
-    
+
     /* Widget States */
     .widget-card.is-minimized { max-height: 75px; opacity: 0.6; filter: grayscale(0.3); }
     .widget-card.is-minimized .widget-inner > *:not(.widget-label) { display: none; }
-    
+
     .widget-card[data-major="true"].is-restored { max-height: 140px; overflow: hidden; }
     .widget-card[data-major="true"].is-restored textarea { height: 40px; font-size: 0.9rem; }
     .widget-card[data-major="true"].is-restored .agenda-mini-stack,
@@ -189,7 +189,7 @@
     .widget-card[data-accent="terra"] .widget-icon { background: rgba(200,98,58,0.15); color: var(--terracotta); }
     .widget-card[data-accent="sage"] .widget-icon { background: rgba(122,148,104,0.15); color: var(--sage); }
     .widget-card[data-accent="sea"] .widget-icon { background: rgba(74,143,160,0.15); color: var(--sea); }
-    
+
     .card-band { height: 4px; width: 100%; }
     .widget-card[data-accent="sun"] .card-band { background: var(--sun); }
     .widget-card[data-accent="terra"] .card-band { background: var(--terracotta); }
@@ -221,7 +221,7 @@
     .notes-save-bar { display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin-top: 10px; }
     .clear-btn { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted-pale); background: none; border: none; }
     .clear-btn:hover { color: var(--terracotta); }
-    
+
     .agenda-mini-stack { margin-top: 16px; display: flex; flex-direction: column; gap: 8px; border-top: 1px solid var(--line); padding-top: 12px;}
     .agenda-row-inline { display: flex; align-items: baseline; gap: 8px; }
     .tiny-time { font-weight: 700; color: var(--terracotta); font-size: 0.7rem; text-transform: uppercase; flex-shrink: 0; width: 60px;}
@@ -231,7 +231,7 @@
     .weather-hero { display: flex; align-items: flex-end; gap: 16px; pointer-events: none;}
     .weather-temp { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 12vw, 4.5rem); font-weight: 700; line-height: 0.9; color: var(--terracotta); }
     .weather-condition { font-size: 1rem; color: var(--ink-light); }
-    
+
     .weather-details { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); }
     .weather-stats { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--muted); }
     .forecast-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; text-align: center; }
@@ -254,12 +254,12 @@
       transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1); cursor: pointer;
     }
     .rss-global-footer.is-expanded { height: 85dvh; background: var(--paper); border-radius: var(--radius-xl) var(--radius-xl) 0 0; cursor: default;}
-    
+
     .ticker-wrap { display: flex; white-space: nowrap; padding: 10px 0; animation: ticker 80s linear infinite; }
     .rss-global-footer:hover .ticker-wrap { animation-play-state: paused; }
     @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
     .ticker-item { margin-right: 60px; font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink); font-weight: 500;}
-    
+
     .rss-reader-content { display: none; padding: 40px; height: calc(100% - 40px); overflow-y: auto; max-width: 800px; margin: 0 auto; }
     .rss-global-footer.is-expanded .rss-reader-content { display: block; }
     .rss-article { margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
@@ -271,7 +271,7 @@
 <body class="theme-morning">
   <div class="grain" aria-hidden="true"></div>
   <button class="zen-toggle" onclick="toggleZen()">⬥ Zen</button>
-  
+
   <header class="topbar">
     <div class="topbar-left">
       <p class="eyebrow zen-keep" id="dateLabel"></p>
@@ -305,7 +305,7 @@
 
   <script>
     const STORAGE_KEY = 'levi-dashboard-v3';
-    
+
     const defaultConfig = {
       notes: 'Focus: Keep the signal high.\n\n- Task 1\n- Task 2',
       agenda: [
@@ -342,12 +342,12 @@
       card.className = 'widget-card';
       if (isMajor) card.dataset.major = "true";
       card.dataset.accent = accent;
-      
+
       const band = el('div', 'card-band');
       const inner = el('div', 'widget-inner');
       const labelRow = el('div', 'widget-label');
       labelRow.append(el('div', 'widget-icon', icon), el('div', '').appendChild(el('p', 'widget-kicker', kicker)).parentNode.appendChild(el('h2', 'widget-title', title)).parentNode);
-      
+
       inner.appendChild(labelRow);
       card.append(band, inner);
       return card;
@@ -358,7 +358,7 @@
 
     function toggleFocus(card) {
       if (focusedWidget === card) return; // Already focused
-      
+
       document.querySelectorAll('.widget-card').forEach(c => {
         const isMajor = c.dataset.major === 'true';
         c.classList.remove('is-focused');
@@ -408,7 +408,7 @@
       textarea.className = 'input-field';
       textarea.value = state.notes;
       textarea.placeholder = "Focus: ...";
-      
+
       const agendaContainer = el('div', 'agenda-mini-stack');
       state.agenda.forEach(entry => {
         const row = el('div', 'agenda-row-inline');
@@ -435,19 +435,19 @@
       const card = makeCard('sun', '💠', 'Gateway', 'Portal', false);
       const body = card.querySelector('.widget-inner');
       let mode = 'search';
-      
+
       const toggleRow = el('div', 'portal-toggle-row');
       toggleRow.innerHTML = `<button class="mode-btn active" id="btnSearch">Search</button><button class="mode-btn" id="btnAI">AI</button>`;
-      
+
       const input = document.createElement('input');
       input.className = 'input-field portal-input';
       input.placeholder = 'Search the web...';
       input.type = 'text';
-      
+
       const execute = () => {
         const q = input.value.trim();
         if (!q) return;
-        const url = mode === 'search' 
+        const url = mode === 'search'
           ? `https://www.google.com/search?q=${encodeURIComponent(q)}`
           : `https://gemini.google.com/app?q=${encodeURIComponent(q)}`;
         window.open(url, '_blank');
@@ -474,7 +474,7 @@
     function buildWeather() {
       const card = makeCard('terra', '🌤', 'Atmosphere', 'Weather', true);
       const body = card.querySelector('.widget-inner');
-      
+
       const hero = el('div', 'weather-hero');
       const tempEl = el('div', 'weather-temp', '—');
       const condEl = el('div', 'weather-condition', 'Detecting location...');
@@ -495,10 +495,10 @@
             const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,wind_speed_10m,relative_humidity_2m&daily=temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto`;
             const res = await fetch(url);
             const data = await res.json();
-            
+
             tempEl.textContent = `${Math.round(data.current.temperature_2m)}°`;
             condEl.textContent = "Current Conditions";
-            
+
             let forecastHTML = '<div class="forecast-grid">';
             for(let i=1; i<4; i++) {
               forecastHTML += `<div class="forecast-day"><p class="eyebrow">${new Date(data.daily.time[i]).toLocaleDateString([], {weekday:'short'})}</p><p><strong>${Math.round(data.daily.temperature_2m_max[i])}°</strong></p></div>`;
@@ -537,10 +537,10 @@
     }
 
     function togglePomodoro() {
-      if (pmoInterval) { clearInterval(pmoInterval); pmoInterval = null; } 
+      if (pmoInterval) { clearInterval(pmoInterval); pmoInterval = null; }
       else {
         pmoInterval = setInterval(() => {
-          if (pmoSeconds > 0) { pmoSeconds--; updatePmoDisplay(); } 
+          if (pmoSeconds > 0) { pmoSeconds--; updatePmoDisplay(); }
           else { clearInterval(pmoInterval); pmoInterval = null; alert("Session complete."); }
         }, 1000);
       }
@@ -557,7 +557,7 @@
       try {
         const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=https://www.theverge.com/rss/index.xml`);
         const data = await res.json();
-        
+
         ticker.innerHTML = data.items.map(item => `<span class="ticker-item">${item.title}</span>`).join('');
         list.innerHTML = data.items.map(item => `
           <div class="rss-article">
@@ -575,7 +575,7 @@
 
       const now = new Date();
       document.getElementById('dateLabel').textContent = now.toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric' });
-      
+
       const hr = now.getHours();
       document.getElementById('greeting').textContent = hr < 12 ? "Good morning, Levi." : hr < 18 ? "Good afternoon." : "Good evening.";
       refreshFocus();
@@ -584,7 +584,7 @@
       [buildCommandCenter(), buildWeather(), buildUniversalPortal(), buildLinks()].forEach(w => stack.appendChild(w));
 
       initRSS();
-      
+
       // Footer expansion logic
       const footer = document.getElementById('rssFooter');
       footer.addEventListener('transitionend', () => {
@@ -598,4 +598,3 @@
   </script>
 </body>
 </html>
-
