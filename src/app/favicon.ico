@@ -1,1 +1,4 @@
-{"display_name":"favicon.ico","path":"src/app/favicon.ico","type":"file","size":25931}
+<!-- placeholder to replace problematic ICO; contains SVG data (note: extension is .ico) -->
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="8" fill="#0ea5a4" />
+</svg>
