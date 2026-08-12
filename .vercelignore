@@ -1,0 +1,10 @@
+# Ignore the nested home-app during Vercel builds/deploys
+jules_session_5541818285171702358/home-app
+
+# Common ignores
+node_modules/
+.next/
+dist/
+
+# Keep build artifacts and caches out of the deployment
+coverage/
