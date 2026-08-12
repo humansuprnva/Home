@@ -14,7 +14,9 @@
     "next": "16.3.0",
     "next-pwa": "^5.6.0",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "@tailwindcss/postcss": "^4",
+    "autoprefixer": "^10"
   },
   "devDependencies": {
     "@prisma/client": "^5.22.0",
