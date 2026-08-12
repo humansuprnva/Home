@@ -506,7 +506,10 @@
             forecastHTML += '</div>';
 
             detailView.innerHTML = `<div class="weather-stats"><span>Wind: ${data.current.wind_speed_10m} mph</span><span>Humidity: ${data.current.relative_humidity_2m}%</span></div>${forecastHTML}`;
-          } catch (e) { condEl.textContent = 'Forecast offline'; }
+          } catch (e) {
+            console.error(e);
+            condEl.textContent = 'Forecast offline';
+          }
         });
       }
       body.append(hero, detailView);

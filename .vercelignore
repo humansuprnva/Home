@@ -1,0 +1,14 @@
+# Ignore the nested home-app during Vercel builds/deploys
+jules_session_5541818285171702358/home-app
+
+# Ignore problematic icon files inside src/app which Turbopack tries to decode
+src/app/favicon.ico
+src/app/*.ico
+
+# Common ignores
+node_modules/
+.next/
+dist/
+
+# Keep build artifacts and caches out of the deployment
+coverage/
