@@ -559,8 +559,28 @@
       const ticker = document.getElementById('tickerContent');
       const list = document.getElementById('rssList');
       try {
-        const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=https://www.theverge.com/rss/index.xml`);
-        const data = await res.json();
+        let data;
+        let useCache = false;
+        const cacheKey = 'rssCache_theverge';
+        const cacheTimeKey = 'rssCacheTime_theverge';
+        const cacheDuration = 3600000;
+        try {
+          const cachedData = localStorage.getItem(cacheKey);
+          const cacheTime = localStorage.getItem(cacheTimeKey);
+          if (cachedData && cacheTime && (Date.now() - parseInt(cacheTime)) < cacheDuration) {
+            data = JSON.parse(cachedData);
+            useCache = true;
+          }
+        } catch(e) {}
+
+        if (!useCache) {
+          const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=https://www.theverge.com/rss/index.xml`);
+          data = await res.json();
+          try {
+            localStorage.setItem(cacheKey, JSON.stringify(data));
+            localStorage.setItem(cacheTimeKey, Date.now().toString());
+          } catch(e) {}
+        }
         
         ticker.innerHTML = data.items.map(item => `<span class="ticker-item">${item.title}</span>`).join('');
         list.innerHTML = data.items.map(item => `
