@@ -1,0 +1,8 @@
+🎯 **What:**
+Fixed a DOM-based Cross-Site Scripting (XSS) vulnerability in `text.txt:415` (within `buildCommandCenter`) caused by unsanitized input being injected into the DOM via `innerHTML`.
+
+⚠️ **Risk:**
+If an attacker manages to inject malicious JavaScript payloads into the `agenda` state items (e.g., via user input saved in `entry.item` or `entry.time`), those payloads would be executed in the context of the user's browser, potentially leading to session hijacking, data theft, or unauthorized actions on the user's behalf.
+
+🛡️ **Solution:**
+Replaced `innerHTML` with safe DOM manipulation methods (`document.createElement`, `textContent`, `appendChild`, and `createTextNode`). This ensures any data in `entry.time` and `entry.item` is safely treated as plain text rather than executable HTML/JS.
