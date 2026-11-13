@@ -1,0 +1,44 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Agent {
+  id               String        @id @default(uuid())
+  name             String
+  description      String?
+  systemPrompt     String
+  providerUrl      String        @default("http://localhost:11434") // Ollama default or local LM Studio
+  model            String        @default("llama3")
+  temperature      Float         @default(0.7)
+  sandboxingEnabled Boolean      @default(true)
+  tools            String        @default("[\"code_executor\", \"file_system\", \"web_fetcher\", \"shell_cmd\", \"memory\"]") // JSON array of enabled tool IDs
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  sessions         ChatSession[]
+}
+
+model ChatSession {
+  id        String        @id @default(uuid())
+  agentId   String
+  agent     Agent         @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  title     String        @default("New Chat")
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  messages  ChatMessage[]
+}
+
+model ChatMessage {
+  id          String      @id @default(uuid())
+  sessionId   String
+  session     ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  role        String      // 'user' | 'assistant' | 'system' | 'tool'
+  content     String
+  toolCalls   String?     // JSON string of executed tool calls if any
+  toolResults String?     // JSON string of tool results if any
+  createdAt   DateTime    @default(now())
+}
